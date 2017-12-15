@@ -1,0 +1,441 @@
+---
+title: "Translate your text while you are sleeping!"
+author: "Vladimir Zhbanko"
+output: html_notebook
+---
+
+# Automatic Translations with R and Google Translator API
+
+This document is to create a way to easier read and translate captions in `*.vtt` format
+
+## Section 1 Why do you need it?
+
+### Lecture 1 Introduction
+
+* many files to translate
+* automate repetitive tasks
+* good quality initial text
+
+## Section 2 Make It!
+
+### Lecture 2 Install R
+
+Re-use lecture about R installation
+
+### Lecture 3 Google Translator API key
+
+* Subscribe to Google Cloud Platform
+* Generate your API Key
+* Copy your key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Lecture 4 Encrypt your key in R!
+
+It is highly recommended that you encrypt your key! This lecture will show how. Remember that you can learn much more about using Cryptography from my other course **Cryptography is more fun with R!** [course coupon](https://www.udemy.com/keep-your-secrets-under-control/?couponCode=KEEP-SECRET-20)
+
+#### Using Public Key Cryptography to securely store your API Key
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE, paged.print=TRUE}
+# Generate your private key and write it to the folder, we assume you will save it to the folder C:/Users/UserName/.ssh/ mac users can adapt the path...
+# if necessary install package
+# install.packages("openssl"); install.packages("tidyverse")
+# loads library open ssl and tidyverse
+library(openssl)
+library(tidyverse)
+
+# generate private key
+rsa_keygen(bits = 5555) %>% write_pem(path = "C:/Users/fxtrams/.ssh/id_api")
+# extract and write your public key
+read_key(file = "C:/Users/fxtrams/.ssh/id_api", password = "") %>% `[[`("pubkey") %>% write_pem("C:/Users/fxtrams/.ssh/id_api.pub")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Now you have your personal public key which we will use to encrypt the credentials
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+# encrypt your key (I am showing my API key because I will delete it anyhow after creating the course)
+## Encrypt with PRIVATE key (e.g. use this code yourself)
+"your API key" %>% 
+  # serialize the object
+  serialize(connection = NULL) %>% 
+  # encrypt the object
+  encrypt_envelope("C:/Users/fxtrams/.ssh/id_api.pub") %>% 
+  # write encrypted data to File
+  write_rds("api_key.enc.rds")
+
+```
+
+Now we have our encrypted key inside our project folder! 
+
+If you will use this script later -> delete API key from your script and feel free to use Version Control Repository!
+
+In the next lecture we will see how to read the key back!
+
+**NOTE:** if you plan to collaborate and use your key by multiple persons with version control check out R package 'secret'. Remember that you can learn how to use it in my course about Cryptography in R!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Lecture 5 Translate Hello World!
+
+In this lecture we will do a very simple task! We will see how to use package in R called **translateR**
+
+```{r}
+library(openssl)
+library(tidyverse)
+# to install package in R
+install.packages("translate")
+library(translate)
+citation("translate")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+# help on the package
+?translate
+
+# we need our API key to translate 
+out <- read_rds("api_key.enc.rds")
+
+# decrypting the password using public data list and private key
+api_key <- decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% 
+  unserialize()
+
+# usage: translate(query, source, target, key = get.key())
+translate("Mi piace questo corso", "it", "en", key = api_key)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Lecture 8 For loop!
+
+Hello! This lecture I am recording during real usage of my code! I will be translating 23 files in 8 different languages!!!
+
+
+
+```{r}
+# translate 23 files in .vtt format
+source("translateVTT.R")
+library(openssl)
+library(tidyverse)
+
+# make a list of files to translate
+filesToTranslate <-list.files("C:/Users/fxtrams/Downloads/", pattern="*.vtt", full.names=TRUE)
+# make a list of languages
+languages <- c("fr", "tr", "it", "id", "pt", "es", "ms", "de")
+# get api key
+out <- read_rds("api_key.enc.rds")
+
+# decrypting the password using public data list and private key
+api_key <- decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% unserialize()
+
+# starting time of my job
+start_time <- Sys.time()
+balance_before <- 275.03
+
+# for loop
+for (FILE in filesToTranslate) {
+  # for loop for languages
+  for (LANG in languages) {
+    # translation
+    translateVTT(fileName = FILE, sourceLang = "en", destLang = LANG, apikey = api_key)
+  }
+  
+}
+
+
+# starting time of my job
+end_time <- Sys.time()
+
+# how much time did it take?
+end_time - start_time
+# balance
+balance_after <- 256.66
+
+# total cost
+cost <- balance_before-balance_after
+
+cost
+
+# result:
+
+
+```
+# conclusion!
+1.26 hours and 18.37$ to translate 23 files to 8 different languages...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+library(stringr)
+library(tidyverse)
+library(translateR)
+
+# read file -> it will be a dataframe
+t <- read.delim("C:/Users/fxtrams/Downloads/L3.vtt", stringsAsFactors = F)
+
+# extract logical vector indicating which rows containing timestamps
+x <- t %>% 
+  # detect rows with date time (those for not translate)
+  apply(MARGIN = 1, str_detect, pattern = "-->")
+
+# extract only rows containing text (e.g. not containing timestamps) 
+txt <- subset.data.frame(t, !x) 
+# extract only time stamps
+tst <- subset.data.frame(t,  x)
+
+# # write to file for translation (manually)
+# txt %>% write.table("translate.txt", row.names = F)
+
+# # write lines for translations
+# lns <- txt %>% as.matrix() %>% c()
+```
+
+## translate this file using translate API paid service in Google
+
+```{r}
+# translate object txt or file in R
+# Google, translate column in dataset
+google.dataset.out <- translate(dataset = txt,
+                                content.field = 'WEBVTT',
+                                google.api.key = "api key do not check me in to Version Control!",
+                                source.lang = 'en',
+                                target.lang = 'es')
+
+# extract only new column
+trsltd <- google.dataset.out %>% select(translatedContent)
+
+# give original name
+colnames(trsltd) <- "WEBVTT"
+
+# 
+```
+
+## place it back...
+
+```{r}
+## read this file back
+#tsltd <- read.table("translate.txt", encoding = "UTF-8", header = T, stringsAsFactors = F)
+
+# add original row names to the table tsltd
+# row.names(tsltd) <- as.numeric(row.names(txt))
+
+# bind rows with original timestamps
+abc <- rbind(tst, trsltd)
+
+# order this file back again
+bcd <-  abc[ order(as.numeric(row.names(abc))), ] %>% as.character() %>% as.data.frame()
+
+# return original name
+colnames(bcd) <- "WEBVTT"
+
+bcd <- as.tibble(bcd)
+# add one row
+bcd2 <- add_row(bcd, WEBVTT  = "", .before = 1)
+
+# write this file back :_)
+write.table(bcd2, "translated.vtt",quote = F, row.names = F)
+
+
+```
+
+
+# billing
+https://console.cloud.google.com/billing/01B83E-7B64EC-1DD123
+
+```{r}
+# translate all courses
+source("translateVTT.R")
+library(secret)
+library(openssl)
+library(tidyverse)
+
+# make a list of files to translate
+filesToTranslate <-list.files("C:/Users/fxtrams/Downloads/", pattern="*.vtt", full.names=TRUE)
+# make a list of languages
+languages <- c("fr", "tr", "it", "id", "pt", "es", "ms", "de")
+# get api key
+api_key <- get_secret("api_google_Translate", key = "C:/Users/fxtrams/.ssh/id_api", vault = "COMMON")
+
+# for loop that translate all languages!
+for (fl in filesToTranslate) {
+  # another for loop for languages
+  for (la in languages) {
+    translateVTT(fl, "en", la, api_key)
+  }
+  
+}
+
+
+```
+
+
