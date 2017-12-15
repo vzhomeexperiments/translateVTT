@@ -28,10 +28,17 @@ Re-use lecture about R installation
 * Generate your API Key
 * Copy your key
 
+Hello and welcome back to the course. 
+In this lecture we will talk about Google Cloud Platform. We will have a very brief overview of the platform and most importantly we will generate an API key in order to use Google Translate API
 
+Just to repeat the concept. Google translate web page is simple and free. Google Tranlate API allow you to automatically send text process it and send you translation back. This is a paid service but eventually you can get first 12 month free trial and 300 USD credit to use for your practice.
 
+There are two ways to get there. The first one is to go to code.google.com. Click on developers tab and scroll down to the bottom. You will find the tab Google Cloud Platform. Alternatively you can type directly cloud.google.com. First time connecting you will need to subscribe for the free trial. I have already done so. All I needed is to provide a credit card number, and my billing information. The great thing is that they would not charge you if you overrun your limit within the trial period. You will have a chance to cancel subscription. Feel free to explore this web page. it is containing a lot of stuff. Imagine hundreds of engineers are working on that! But don't get lost
+Finally click on Go to Console. You will go to the project environment. Whre you have your dasbhoard. The most importan part is Billign Menu. Let's go there. See that I have 275 Swiss franks remaining here. Next click on the menu and select API and Services. Click on the Library and search for Google Cloud translation API. Select it and click on Manage. We will however need just the API Key which you can get going to Credetnials menu. Simply click and choose generate credentials. You can have a chance to restrict it by IP address for example. I will name my key to remember and that is it!
 
+So this is all really that we need - we get now our Key! But keep it there, don't write it on the paper. We will learn how to handle it in the next lecture. If you are not, you will learn how to encrypt this key!
 
+happy translating!
 
 
 
@@ -78,6 +85,16 @@ Re-use lecture about R installation
 
 
 ### Lecture 4 Encrypt your key in R!
+
+Hello and welcome back to the course. 
+
+As you already noticed API key is the same as your password from online banking. You have to protect it. This is what we will do in this lecture!
+
+By the way I have made dedicated course that teach in detail about how to use Public key Cryptography in R Statistical Software. Especially for the students of this course there is a coupon for this course please check in the last lecture! **Cryptography is more fun with R!** [course coupon](https://www.udemy.com/keep-your-secrets-under-control/?couponCode=KEEP-SECRET-20) There you will understand how to use it without hassle of additional software installation and with great understanding ofth process. By the way, this course subtitles were translated to 8 languages using code from this course! 
+
+Let's now go to R adn load libraries. Openssl library is needed to use Cryptography and tidyverse library is needed to perform data manipulations. The code you see here is needed to generate our private key. You will want to adapt the path to correspond to your folder structure. 
+
+happy translating!
 
 It is highly recommended that you encrypt your key! This lecture will show how. Remember that you can learn much more about using Cryptography from my other course **Cryptography is more fun with R!** [course coupon](https://www.udemy.com/keep-your-secrets-under-control/?couponCode=KEEP-SECRET-20)
 
