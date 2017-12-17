@@ -23,4 +23,4 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
-api_key.enc.rds
+.api_key.enc.rds

@@ -12,6 +12,31 @@ This document is to create a way to easier read and translate captions in `*.vtt
 
 ### Lecture 1 Introduction
 
+Hello and welcome to the course! 
+
+This course is about **automating your translation jobs with Google Translate API**. We will access it via R Software for Statistics and Graphics. This way we coud use this course even for more anvance text processing or even sentiment analysis. With R we can do all that while not being professional programmers
+
+This short but powerful course will teach you how to turn your computer into the text translating machine!!!
+
+It will be valuable for you for a number of reasons. Primary goal will be to translate **closed captions files** for online videos. However you can also apply this course if you are dealing with documents that needs to be translated to many different languages. For example **product manuals or operating instructions**. In case the content of the documents may change over time your ability to shorted translation process can greatly **shorten time to market**. You may also need to perform **sentiment analysis of foreign text** like specific consumer database or twitter feeds, hence the course may be helpful for data pre-processing steps.
+
+This **course is short and sweet**. I don't have much time to create long lectures so you don't have time to watch them. If you joining the course this is because you want to automate your translating jobs. You want to do this fast. Inspite the course is short **you will have many useful examples** to learn. For example text manipulation in R, dataframe manipulations, reading and manipulating files and more. Our primary objective will be to see how can you translate VTT files used for closed captions. In our example you will see how we would be able to set up a job capable to process 23 files and translate them to 8 different languages. You will see exactly all steps we do and you will be able to follow along and repeat them.
+
+Google Translate web page is free service, **Google translate API is not free**. Great news is that **you can have free trial** period and you could be able to start right away without paying a dime. Additionally course will **allow you to estimate approximate cost** of translation should you want to use it on a constant basis.
+
+Before I forgot let me tell you one **additional advantage** of the course. This course will take usage of API keys very seriously. You will be able to learn how can you **encrypt your API key**. This way you will even be able to store your R scripts in the public version control repositories... 
+
+So join this course because you will be able to automate your translation and let computer do the job!
+
+
+```{r}
+citation()
+```
+
+
+In the next few minutes I would like to introduce to the whole list of guide you through the course to 
+
+
 * many files to translate
 * automate repetitive tasks
 * good quality initial text
@@ -726,15 +751,23 @@ Second thing I will do I will go to my Cloud account to see how much money I hav
 
 ## Lecture 9 How much does it cost?
 
-Hello and welcome to the final lecture of this course. We will of course see the result of translation and conclude by reviwing how much it costs both in terms of time and money. Additionally we will see how it's possible to delete our API key in case we will not planning to use it for a next time. 
+Hello and welcome back to the the course. 
 
-Let me go and see first what is in the folder. Super, I have all my files perfectly translated. Each file has been properly marked with a text index so I know which file means what language.
+In this lecture We will see the result of translation and conclude by reviwing how much it costed to us both in terms of time and money. I would also briefly mention how can you benefit from the Automated Translation API from google because it is relly worth it! Additionally we will see how it's possible to delete our API key in case we will not planning to use it for a next time. 
 
-Now let me go back to my R software to see how much time did it take. Good news that I can simply substract end time from start time and I will be able to learn that it took one and the half hour. What about money? Do I still have any? I will go to my project and I will learn that I have 256 CHF remaining. Which is probably not too bad. Considering time it would take to translate all those files manaully 20 swiss franks are not that big deal. Even if you have to pay that from your own pocket it is still worth to use automated translation. Just remind that we have now 8 different languages. 
+Let me go and see first what is in the folder containing results. Super, I have all my files perfectly translated. Each filename has been marked with a text index so I know which file means which language. It would be of course possible to create separate folders for each of our languages. If you feel need it please post a question in the course board and I will gladly create you a bonus lecture for you. 
 
-What I will also show you now is how to delete your key. Well It's very  intuitive. Simply go ahead and delete it. Because of the fact that you can generate your key any time again it's probably good to know how to delete this key. 
+Now let me go back to my R software to see how much time did it take. Good news that I can simply substract end time from start time and I will be able to learn that it took one and the half hour. What about money? Do I still have any money left? I will go to my project and I will learn that I have 256 CHF remaining. Which is probably not too bad. Considering time it would take me to translate all those files manaully 20 swiss franks are not that big deal. Even if you have to pay that from your own pocket it is still worth to use automated translation. Just remind that we have now 8 different languages and in total we have generated 184 translated files. That is equivalent to 10 cents for one! Additionally we could totally automate our job so it would definitely pay off if you do translation professionally! I can tell you more. Even if I had free time I would be extremely bored to manually move trough each file and translate it... 
 
-That is it. You have now completed this course. You know that Google translated 23 files to 8 languages. In total we spent 18.4 CHF that is equivalent to exactly 10 cents for each file created...
+In this course we have solved a problem of translating VTT files. However let me spend few moments about discussing how else you can benefit from this course? Let's assume you work for a company that needs to export products to many countries. Obviously you will be obliged to build user instructions for your product. Exactly, you probably already got my idea. You have your original master instruction. Perhaps each topic is saved in the database and you can easily translate your text to any languages! If your master instruction changes over different product revisions you will be able to simply re-run your translation job and all the translations will be updated accordingly! You can probably cut the time to market virtually to hours instead of weeks...
+
+There are probably many other use cases, feel free to discuss them in the course question board...
+
+Let me now move to the last chapter of the lecture. I will just remind you that API key is linked to your billing account with google. For that it would be wise to delete your key. Well It's very  intuitive. Simply go ahead and delete it. Because of the fact that you can generate your key any time again it's probably better delete it so you don't need to worry about it. 
+
+
+
+
 
 So thank you for be part of the course and happy translating!
 
