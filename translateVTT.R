@@ -1,6 +1,7 @@
 # this is a translation function for vtt files
+# (C) 2017 Vladimir Zhbanko
 
-translateVTT <- function(fileName, sourceLang, destLang, apikey){
+translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc = "UTF-8"){
   # PURPOSE: Translate *.vtt files from any language to any language using Google API key
   # Note: Google Tranlation with API is paid service, however 300USD is given for free for 12 month
   # variables for debugging
@@ -61,8 +62,7 @@ translateVTT <- function(fileName, sourceLang, destLang, apikey){
   # write this file back :_)
   #fileName <- "C:/Users/fxtrams/Downloads/L1.vtt"
   #destLang <- "de"
-  write.table(bcd2, paste0(fileName, destLang, ".vtt"), quote = F, row.names = F,fileEncoding = "UTF-8")
-    
+  write.table(bcd2, paste0(fileName, destLang, ".vtt"), quote = F, row.names = F,fileEncoding = fileEnc)
+  
 }
-
 
