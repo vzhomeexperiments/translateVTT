@@ -827,10 +827,66 @@ cost
 
 
 
+```{r}
+# translate 10 files in .vtt format
+source("translateVTT.R")
+library(openssl)
+library(tidyverse)
+
+# make a list of files to translate
+filesToTranslate <-list.files("C:/Users/fxtrams/Downloads/", pattern="*.vtt", full.names=TRUE)
+# make a list of languages
+languages <- c("fr", "tr", "it", "id", "pt", "es", "ms", "de")
+# get api key
+out <- read_rds("api_key.enc.rds")
+
+# decrypting the password using public data list and private key
+api_key <- decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% unserialize()
+
+# starting time of my job
+start_time <- Sys.time()
+balance_before <- 256.43
+
+# for loop
+for (FILE in filesToTranslate) {
+  # for loop for languages
+  for (LANG in languages) {
+    # translation
+    translateVTT(fileName = FILE, sourceLang = "en", destLang = LANG, apikey = api_key)
+  }
+  
+}
+
+
+# starting time of my job
+end_time <- Sys.time()
+
+# how much time did it take?
+end_time - start_time
+# balance
+#balance_after <- 252.42
+
+# total cost
+#cost <- balance_before-balance_after
+
+#cost
+
+# result:
+
+#Time difference of 34.55761 mins
+```
 
 
 
+```{r}
+work <- data.frame(today=c("2017/12/19", "2017/12/19"),
+                   MemorableDays=c("2016/04/01", "2016/06/15"))
 
+work$date_diff <- as.Date(as.character(work$today), format="%Y/%m/%d")-
+                  as.Date(as.character(work$MemorableDays), format="%Y/%m/%d")
+work
+       
+```
 
 
 
