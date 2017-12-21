@@ -60,11 +60,31 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc 
   }
 
 
-   require(tidyverse)
+  require(tidyverse)
   require(translateR)
 
   # read file -> it will be a dataframe
   t <- read.delim(fileName, stringsAsFactors = F)
+
+  ## dealing with locale ... only supporting few key languages at the moment
+  # note: we must apply fail back mechanism in case OS does not support it!
+  if(destLang == "fr") {
+    res <- Sys.setlocale(locale = "French")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "ru") {
+    res <- Sys.setlocale(locale = "Russian")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "it") {
+    res <- Sys.setlocale(locale = "Italian")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "zh-CN") {
+    res <- Sys.setlocale(locale = "Chinese")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "hi") {
+    res <- Sys.setlocale(locale = "Hindi")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  }
+
 
   # extract logical vector indicating which rows containing timestamps
   x <- t %>%
@@ -75,7 +95,6 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc 
   txt <- subset.data.frame(t, !x)
   # extract only time stamps
   tst <- subset.data.frame(t,  x)
-
 
   ## translate this file using translate API paid service in Google
 
@@ -113,5 +132,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc 
   #destLang <- "de"
   utils::write.table(bcd2, paste0(fileName, destLang, ".vtt"), quote = F, row.names = F,fileEncoding = fileEnc)
 
+  # restoring locale
+  Sys.setlocale()
 }
 
