@@ -313,3 +313,66 @@ for (FILE in filesToTranslate) {
 
 1.26 hours and 18.37$ to translate 23 files to 8 different languages...
 
+```
+
+# Troubleshooting
+
+## translateR package does not return translation (Mac)
+
+If you are using Mac and using `translateR` package you may encounter following problem. Function translate() would return only 1 column with original text without giving you translation.
+
+```{r}
+google.dataset.out <- translate(dataset = t, content.field = 'WEBVTT', google.api.key = api_key, source.lang = 'en', target.lang = 'es')
+```
+
+It was possible to override this problem by using code from `translate` package first...
+
+```{r}
+# executed first
+res.translate <- translate::translate(query = "Hello World", source = "en", target = "de", key = apikey)
+and then above code worked
+
+# Google, translate column in dataset
+res.translateR2 <- translateR::translate(dataset = txt,
+                              content.field = 'WEBVTT',
+                              google.api.key = apikey,
+                              source.lang = "en",
+                              target.lang = "de")
+```
+
+## not visualizing proper Encoding for 'special' characters
+
+For 'special' characters like chinese, cyrilic, etc there might be problems with encoding while writing to the file!
+
+The most possible reason is the Operating System `locale`. Function `translateVTT` tries to handle that by switching OS locale to appropriate one:
+
+```{r}
+  ## dealing with locale ... only supporting few key languages at the moment
+  # note: we must apply fail back mechanism in case OS does not support it!
+  if(destLang == "fr") {
+    res <- Sys.setlocale(locale = "French")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "ru") {
+    res <- Sys.setlocale(locale = "Russian")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "it") {
+    res <- Sys.setlocale(locale = "Italian")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "zh-CN") {
+    res <- Sys.setlocale(locale = "Chinese")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  } else if(destLang == "hi") {
+    res <- Sys.setlocale(locale = "Hindi")
+    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
+  }
+
+# ... your code to translate
+
+# restoring locale
+  Sys.setlocale()
+
+
+```
+
+Unfortunately this will not always work. Mainly because OS version may simply be 'without' needed locale...
+
