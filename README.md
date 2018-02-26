@@ -342,6 +342,8 @@ res.translateR2 <- translateR::translate(dataset = txt,
 
 ## not visualizing proper Encoding for 'special' characters
 
+see: https://stackoverflow.com/questions/44095025/r-how-to-convert-utf-8-code-like-u9600u524d-back-to-chinese-characters
+
 For 'special' characters like chinese, cyrilic, etc there might be problems with encoding while writing to the file!
 
 The most possible reason is the Operating System `locale`. Function `translateVTT` tries to handle that by switching OS locale to appropriate one:
