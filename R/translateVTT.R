@@ -13,9 +13,6 @@
 #' @param destLang Destination language for translator function. Only one at the
 #'   time
 #' @param apikey Google Translate API key
-#' @param fileEnc Provide File Encoding option when writing vtt file after
-#'   translation, 'UTF-8' is default option
-#'
 #' @return Function does not return value. It is generating new file adding
 #'   language code before .vtt
 #' @export
@@ -29,8 +26,7 @@
 #' translateVTT(fileName = "L0.vtt",
 #'              sourceLang = "en",
 #'              destLang = "es",
-#'              apikey = google.api.key,
-#'              fileEnc = "UTF-8")
+#'              apikey = google.api.key)
 #'
 #' ## send multiple files for translations
 #'
@@ -51,10 +47,10 @@
 #'
 #' ## End(Not run)
 #'
-translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc = "UTF-8"){
+translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
 
   # check if the required packages are installed
-  if (!requireNamespace(c("tibble", "tidyverse", "translateR", "utils"), quietly = TRUE)) {
+  if (!requireNamespace(c("tibble", "tidyverse", "translateR", "readr", "utils"), quietly = TRUE)) {
     stop("Pkg needed for this function to work. Please install it.",
          call. = FALSE)
   }
@@ -64,27 +60,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc 
   require(translateR)
 
   # read file -> it will be a dataframe
-  t <- read.delim(fileName, stringsAsFactors = F)
-
-  ## dealing with locale ... only supporting few key languages at the moment
-  # note: we must apply fail back mechanism in case OS does not support it!
-  if(destLang == "fr") {
-    res <- Sys.setlocale(locale = "French")
-    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
-  } else if(destLang == "ru") {
-    res <- Sys.setlocale(locale = "Russian")
-    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
-  } else if(destLang == "it") {
-    res <- Sys.setlocale(locale = "Italian")
-    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
-  } else if(destLang == "zh-CN") {
-    res <- Sys.setlocale(locale = "Chinese")
-    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
-  } else if(destLang == "hi") {
-    res <- Sys.setlocale(locale = "Hindi")
-    if(res == "") {stop("Your OS does not support this language", call. = FALSE)}
-  }
-
+  t <- read_delim(fileName, delim = "\t", col_types = "c") %>% as.data.frame.data.frame()
 
   # extract logical vector indicating which rows containing timestamps
   x <- t %>%
@@ -130,9 +106,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey, fileEnc 
   # write this file back :_)
   #fileName <- "C:/Users/fxtrams/Downloads/L1.vtt"
   #destLang <- "de"
-  utils::write.table(bcd2, paste0(fileName, destLang, ".vtt"), quote = F, row.names = F,fileEncoding = fileEnc)
+  readr::write_delim(bcd2, paste0(fileName, destLang, ".vtt"), delim = "\t")
 
-  # restoring locale
-  Sys.setlocale()
 }
 
