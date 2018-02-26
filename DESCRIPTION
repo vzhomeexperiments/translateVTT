@@ -1,6 +1,6 @@
 Package: translateVTT
 Title: Automatically translate VTT files
-Version: 0.0.1.9000
+Version: 1.0.1.9000
 Authors@R: person("Vladimir", "Zhbanko", 
            email = "vladimir.zhbanko@gmail.com", role = c("aut", "cre"))
 Description: Package imports user files from a specified directory, extract text

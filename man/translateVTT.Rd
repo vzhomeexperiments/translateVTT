@@ -4,8 +4,7 @@
 \alias{translateVTT}
 \title{translateVTT}
 \usage{
-translateVTT(fileName, sourceLang = "en", destLang, apikey,
-  fileEnc = "UTF-8")
+translateVTT(fileName, sourceLang = "en", destLang, apikey)
 }
 \arguments{
 \item{fileName}{Path to the file you want to translate. Only one file name is
@@ -17,9 +16,6 @@ accepted at the time}
 time}
 
 \item{apikey}{Google Translate API key}
-
-\item{fileEnc}{Provide File Encoding option when writing vtt file after
-translation, 'UTF-8' is default option}
 }
 \value{
 Function does not return value. It is generating new file adding
@@ -41,8 +37,7 @@ To do: use http://r-pkgs.had.co.nz/tests.html to write test for this package
 translateVTT(fileName = "L0.vtt",
              sourceLang = "en",
              destLang = "es",
-             apikey = google.api.key,
-             fileEnc = "UTF-8")
+             apikey = google.api.key)
 
 ## send multiple files for translations
 
