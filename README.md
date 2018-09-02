@@ -376,5 +376,7 @@ The most possible reason is the Operating System `locale`. Function `translateVT
 
 ```
 
-Unfortunately this will not always work. Mainly because OS version may simply be 'without' needed locale...
+## Want to learn more?
+
+Join this *Udemy Course* with this [coupon](https://www.udemy.com/automated-translation-google-translate-api/?couponCode=TRANSLATE-VTT-10) and get Lifetime access with 30 days money back guarantee!
 
