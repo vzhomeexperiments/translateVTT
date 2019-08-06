@@ -1,14 +1,14 @@
-#' translateVTT
+#' Translation function for vtt files.
 #'
-#' Translation function for vtt files. Function will be able to send your vtt
-#' file for translation in Google Translate API and return proper strucuture of
-#' the file back. Note: Google Tranlation with API is paid service, however
-#' 300USD is given for free for 12 month.
+#' @description Function will be able to send vtt file for translation
+#' in Google Translate API and return proper strucuture of
+#' the file back.
 #'
-#' To do: use http://r-pkgs.had.co.nz/tests.html to write test for this package
+#' @details Google Tranlation with API is paid service, however
+#' 300USD is given for free for 12 month, check clould.google.com
 #'
-#' @param fileName Path to the file you want to translate. Only one file name is
-#'   accepted at the time
+#' @param fileName String with a path to the file you want to translate.
+#'   Only one file name is accepted at the time
 #' @param sourceLang Source language code, 'en' is default value.
 #' @param destLang Destination language for translator function. Only one at the
 #'   time
@@ -17,15 +17,32 @@
 #'   language code before .vtt
 #' @export
 #'
-#'
+#' @author (C) 2019 Vladimir Zhbanko
 #'
 #' @examples
 #'
-#' ## Not run:
+#' \donttest{
+#'
+#' library(openssl)
+#' library(tidyverse)
+#' library(translateVTT)
+#'
+#' # retrieve filename
+#' file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
+#'
+#' path_ssh <- normalizePath(tempdir(),winslash = "/")
+#' #path_ssh <- "C:/Users/fxtrams/.ssh"
+#'
+#' path_private_key <- file.path(path_ssh, "id_api")
+#'
+#' # decrypt the key
+#' out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
+#' google.api.key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>% unserialize()
+#'
 #' # send one vtt file for translation
-#' translateVTT(fileName = "L0.vtt",
+#' translateVTT(fileName = file_name,
 #'              sourceLang = "en",
-#'              destLang = "es",
+#'              destLang = "ru",
 #'              apikey = google.api.key)
 #'
 #' ## send multiple files for translations
@@ -45,7 +62,7 @@
 #'   }
 #' }
 #'
-#' ## End(Not run)
+#' }
 #'
 translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
 
@@ -56,8 +73,8 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   }
 
 
-  require(tidyverse)
-  require(translateR)
+  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("translateR", quietly = TRUE)
 
   # read file -> it will be a dataframe
   t <- read_delim(fileName, delim = "\t", col_types = "c") %>% as.data.frame.data.frame()

@@ -2,13 +2,13 @@
 % Please edit documentation in R/translateVTT.R
 \name{translateVTT}
 \alias{translateVTT}
-\title{translateVTT}
+\title{Translation function for vtt files.}
 \usage{
 translateVTT(fileName, sourceLang = "en", destLang, apikey)
 }
 \arguments{
-\item{fileName}{Path to the file you want to translate. Only one file name is
-accepted at the time}
+\item{fileName}{String with a path to the file you want to translate.
+Only one file name is accepted at the time}
 
 \item{sourceLang}{Source language code, 'en' is default value.}
 
@@ -22,19 +22,22 @@ Function does not return value. It is generating new file adding
   language code before .vtt
 }
 \description{
-Translation function for vtt files. Function will be able to send your vtt
-file for translation in Google Translate API and return proper strucuture of
-the file back. Note: Google Tranlation with API is paid service, however
-300USD is given for free for 12 month.
+Function will be able to send vtt file for translation
+in Google Translate API and return proper strucuture of
+the file back.
 }
 \details{
-To do: use http://r-pkgs.had.co.nz/tests.html to write test for this package
+Google Tranlation with API is paid service, however
+300USD is given for free for 12 month, check clould.google.com
 }
 \examples{
 
-## Not run:
+\donttest{
+
+# retrieve filename
+file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
 # send one vtt file for translation
-translateVTT(fileName = "L0.vtt",
+translateVTT(fileName = file_name,
              sourceLang = "en",
              destLang = "es",
              apikey = google.api.key)
@@ -56,7 +59,9 @@ for (FILE in filesToTranslate) {
   }
 }
 
-## End(Not run)
-
 }
 
+}
+\author{
+(C) 2019 Vladimir Zhbanko
+}

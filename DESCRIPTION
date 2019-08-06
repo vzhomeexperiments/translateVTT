@@ -1,15 +1,16 @@
 Package: translateVTT
+Type: Package
 Title: Automatically translate VTT files
 Version: 1.0.1.9000
-Authors@R: person("Vladimir", "Zhbanko", 
-           email = "vladimir.zhbanko@gmail.com", role = c("aut", "cre"))
-Description: Package imports user files from a specified directory, extract text
-    of closed captions, sends this text to Google Translate API retrieve back the
-    translation and return original structure of the file. Then package will write
-    vtt file back to the original directory.
+Author: Vladimir Zhbanko
+Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
+Description: Facilitate automated translation of files with a complex structure.
+    Imports user files from a specified directory. Extracts text with closed captions,
+    Sends this text to Google Translate API and retrieves back the
+    translation. Original file structure will be restored.
+    Provides facility to encrypt API keys
 Depends:
     R (>= 3.4.3)
-License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -17,4 +18,7 @@ Imports:
     tidyverse,
     translateR (>= 1.0),
     utils
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1
+License: MIT + file LICENSE
+Suggests: 
+    testthat (>= 2.1.0)
