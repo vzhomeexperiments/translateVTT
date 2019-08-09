@@ -34,8 +34,23 @@ Google Tranlation with API is paid service, however
 
 \donttest{
 
+library(openssl)
+library(tidyverse)
+library(translateVTT)
+library(translateR)
+
 # retrieve filename
 file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
+
+path_ssh <- normalizePath(tempdir(),winslash = "/")
+#path_ssh <- "C:/Users/fxtrams/.ssh"
+
+path_private_key <- file.path(path_ssh, "id_api")
+
+# decrypt the key
+out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
+google.api.key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") \%>\% unserialize()
+
 # send one vtt file for translation
 translateVTT(fileName = file_name,
              sourceLang = "en",

@@ -1,7 +1,7 @@
 Package: translateVTT
 Type: Package
 Title: Automatically translate VTT files
-Version: 1.0.1.9000
+Version: 1.0.2.9000
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
 Description: Facilitate automated translation of files with a complex structure.
@@ -20,5 +20,6 @@ Imports:
     utils
 RoxygenNote: 6.1.1
 License: MIT + file LICENSE
+URL: https://vladdsm.github.io/myblog_attempt/topics/topics-AutotranslateGoogleAPI.html
 Suggests: 
     testthat (>= 2.1.0)

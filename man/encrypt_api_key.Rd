@@ -23,7 +23,9 @@ encrypt_api_key(api_key, enc_name = "api_key.enc.rds",
 Writes a file with encrypted key
 }
 \description{
-Provide easy interfact to encrypt the api key.
+Provide easy interface to encrypt the api key.
+In order to use function simply provide a string with an API key.
+In addition provide the path to the .ssh folder and names of the private and public keys
 }
 \details{
 Make sure to clean the history of the R session
@@ -42,6 +44,11 @@ path_private_key <- file.path(path_ssh, "id_api")
 path_public_key <- file.path(path_ssh, "id_api.pub")
 
 encrypt_api_key('my_key')
+
+out <- read_rds(file.path(path_ssh, "api_key.enc.rds")
+
+# decrypting the password using public data list and private key
+api_key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") \%>\% unserialize()
 
 
 }
