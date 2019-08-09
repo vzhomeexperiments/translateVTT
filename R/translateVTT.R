@@ -26,6 +26,7 @@
 #' library(openssl)
 #' library(tidyverse)
 #' library(translateVTT)
+#' library(translateR)
 #'
 #' # retrieve filename
 #' file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
@@ -42,7 +43,7 @@
 #' # send one vtt file for translation
 #' translateVTT(fileName = file_name,
 #'              sourceLang = "en",
-#'              destLang = "ru",
+#'              destLang = "es",
 #'              apikey = google.api.key)
 #'
 #' ## send multiple files for translations
@@ -116,7 +117,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   colnames(bcd) <- "WEBVTT"
 
   # adding one row in the beginning
-  bcd <- tibble::as.tibble(bcd)
+  bcd <- tibble::as_tibble(bcd)
   # add one row
   bcd2 <- tibble::add_row(bcd, WEBVTT  = "", .before = 1)
 
