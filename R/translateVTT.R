@@ -5,7 +5,7 @@
 #' the file back.
 #'
 #' @details Google Tranlation with API is paid service, however
-#' 300USD is given for free for 12 month, check clould.google.com
+#' 300USD is given for free for 12 month, check cloud.google.com
 #'
 #' @param fileName String with a path to the file you want to translate.
 #'   Only one file name is accepted at the time

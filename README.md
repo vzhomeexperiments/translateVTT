@@ -39,15 +39,14 @@ in `*.vtt` format
 
 ## Why do you need it?
 
-This course is about **automating your translation jobs with Google
-Translate API**. We will access it via R Software for Statistics and
-Graphics. This way we coud use this course even for more anvance text
-processing or even sentiment analysis. With R we can do all that while
-not being professional programmers
+This course is about **automating translation jobs with Google Translate
+API**. We will access it via R Software for Statistics and Graphics.
+This way we could use this course even for more advance text processing
+or even sentiment analysis.
 
 Google Translate web page is free service, **Google translate API is not
-free**. Great news is that **you can have free trial** period and you
-could be able to start right away without paying a dime.
+free**. Great news is that **we can have free trial** period and you
+could be able to start right away without paying.
 
 ## Google Translator API key
 
