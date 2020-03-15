@@ -37,7 +37,8 @@ Make sure to clean the history of the R session
 \examples{
 
 library(openssl)
-library(tidyverse)
+library(magrittr)
+library(readr)
 path_ssh <- normalizePath(tempdir(),winslash = "/")
 rsa_keygen() \%>\% write_pem(path = file.path(path_ssh, 'id_api'))
 # extract and write your public key
@@ -47,7 +48,7 @@ read_key(file = file.path(path_ssh, 'id_api', password = "")) \%>\% `[[`("pubkey
 path_private_key <- file.path(path_ssh, "id_api")
 path_public_key <- file.path(path_ssh, "id_api.pub")
 
-encrypt_api_key('my_key')
+encrypt_api_key(api_key = 'my_key')
 
 out <- read_rds(file.path(path_ssh, "api_key.enc.rds")
 

@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/vzhomeexperiments/translateVTT.svg?branch=master)](https://travis-ci.org/vzhomeexperiments/translateVTT)
 <!-- badges: end -->
 
 The goal of translateVTT is to translate VTT subtitles automatically.
@@ -134,7 +136,7 @@ detect.source("Mi piace questo corso", key = api_key)
 # list of valid language mappings
 languages(key = api_key)
 
-translate("Как насчет выпить", "ru", "en", key = decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% 
+translate("ÐšÐ°Ðº Ð½Ð°ÑÑ‡ÐµÑ‚ Ð²Ñ‹Ð¿Ð¸Ñ‚ÑŒ", "ru", "en", key = decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% 
   unserialize())
 
 translate("How about a drink", "en", "ru", key = decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% 
