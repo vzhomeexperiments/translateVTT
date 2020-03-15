@@ -10,7 +10,7 @@ Description: Facilitate automated translation of files with a complex structure.
     translation. Original file structure will be restored.
     Provides facility to encrypt API keys
 Depends:
-    R (>= 3.4.3)
+    R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -18,7 +18,7 @@ Imports:
     tidyverse,
     translateR (>= 1.0),
     utils
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 License: MIT + file LICENSE
 URL: https://vladdsm.github.io/myblog_attempt/topics/topics-AutotranslateGoogleAPI.html
 Suggests: 

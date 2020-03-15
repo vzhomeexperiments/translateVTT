@@ -4,9 +4,13 @@
 \alias{encrypt_api_key}
 \title{Encrypt api keys}
 \usage{
-encrypt_api_key(api_key, enc_name = "api_key.enc.rds",
-  path_ssh = "path_ssh", file_rsa = "id_api",
-  file_rsa_pub = "id_api.pub")
+encrypt_api_key(
+  api_key,
+  enc_name = "api_key.enc.rds",
+  path_ssh = "path_ssh",
+  file_rsa = "id_api",
+  file_rsa_pub = "id_api.pub"
+)
 }
 \arguments{
 \item{api_key}{String with API key}
