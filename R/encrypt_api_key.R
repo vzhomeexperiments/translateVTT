@@ -32,9 +32,9 @@
 #' path_private_key <- file.path(path_ssh, "id_api")
 #' path_public_key <- file.path(path_ssh, "id_api.pub")
 #'
-#' encrypt_api_key(api_key = 'my_key')
+#' encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path_ssh)
 #'
-#' out <- read_rds(file.path(path_ssh, "api_key.enc.rds")
+#' out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
 #'
 #' # decrypting the password using public data list and private key
 #' api_key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>% unserialize()
