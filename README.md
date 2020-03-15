@@ -82,9 +82,9 @@ Now you have your personal public key which we will use to encrypt the
 credentials
 
 ``` r
-# encrypt your key (I am showing my API key because I will delete it anyhow after creating the course)
+# encrypt your key (always clear history and delete the key used for encryption)
 ## Encrypt with PRIVATE key (e.g. use this code yourself)
-"AIzaSyBOoesHv7_7Sd3hYDTNVW3v_8IBpza-_j8" %>% 
+"=== xxx Place 4 API Key xxx yyy zzz ===" %>% 
   # serialize the object
   serialize(connection = NULL) %>% 
   # encrypt the object
