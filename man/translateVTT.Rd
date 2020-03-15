@@ -36,6 +36,8 @@ Google Tranlation with API is paid service, however
 
 library(openssl)
 library(readr)
+library(magrittr)
+library(stringr)
 library(translateVTT)
 library(translateR)
 
@@ -43,7 +45,6 @@ library(translateR)
 file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
 
 path_ssh <- normalizePath(tempdir(),winslash = "/")
-#path_ssh <- "C:/Users/fxtrams/.ssh"
 
 path_private_key <- file.path(path_ssh, "id_api")
 

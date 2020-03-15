@@ -25,6 +25,8 @@
 #'
 #' library(openssl)
 #' library(readr)
+#' library(magrittr)
+#' library(stringr)
 #' library(translateVTT)
 #' library(translateR)
 #'
@@ -32,7 +34,6 @@
 #' file_name <- system.file("extdata", "L0.vtt", package = "translateVTT")
 #'
 #' path_ssh <- normalizePath(tempdir(),winslash = "/")
-#' #path_ssh <- "C:/Users/fxtrams/.ssh"
 #'
 #' path_private_key <- file.path(path_ssh, "id_api")
 #'
@@ -72,8 +73,9 @@
 #'
 translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
 
+  #fileName = file_name
   # check if the required packages are installed
-  if (!requireNamespace(c("tibble", "magrittr", "openssl",
+  if (!requireNamespace(c("tibble", "magrittr", "openssl", "stringr",
                           "translateR", "readr", "utils"), quietly = TRUE)) {
     stop("Pkg needed for this function to work. Please install it.",
          call. = FALSE)
@@ -83,6 +85,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("tibble", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
+  requireNamespace("stringr", quietly = TRUE)
   requireNamespace("translateR", quietly = TRUE)
 
   # read file -> it will be a dataframe
@@ -130,7 +133,7 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   bcd2 <- add_row(bcd, WEBVTT  = "", .before = 1)
 
   # write this file back :_)
-  #fileName <- "C:/Users/fxtrams/Downloads/L1.vtt"
+  #fileName <- "~Files/Downloads/L1.vtt"
   #destLang <- "de"
   write_delim(bcd2, paste0(fileName, destLang, ".vtt"), delim = "\t")
 

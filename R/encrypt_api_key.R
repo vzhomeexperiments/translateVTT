@@ -7,7 +7,7 @@
 #' @details Make sure to clean the history of the R session
 #'
 #' @references for more info on how to use RSA cryptography in R check my course
-#' https://www.udemy.com/keep-your-secrets-under-control/?couponCode=CRYPTOGRAPHY-GIT
+#' https://www.udemy.com/course/keep-your-secrets-under-control/?referralCode=5B78D58E7C06AFFD80AE
 #'
 #' @param api_key String with API key
 #' @param path_ssh String with path to the file with rsa keys. Same place will be used to store encrypted data
@@ -33,6 +33,7 @@
 #' path_private_key <- file.path(path_ssh, "id_api")
 #' path_public_key <- file.path(path_ssh, "id_api.pub")
 #'
+#' #encrypting string 'my_key'...
 #' encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path_ssh)
 #'
 #' out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
@@ -44,10 +45,19 @@
 #'                             path_private_key, password = "") %>%
 #'            unserialize()
 #'
+#' # outcome of the encryption will be a string 'my_key'
+#'
 #'
 encrypt_api_key <- function(api_key, enc_name = 'api_key.enc.rds',
                             path_ssh = 'path_ssh', file_rsa = 'id_api',
                             file_rsa_pub = 'id_api.pub'){
+
+  # check if the required packages are installed
+  if (!requireNamespace(c("magrittr", "openssl", "readr"),
+                        quietly = TRUE)) {
+    stop("Pkg needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   requireNamespace("magrittr", quietly = TRUE)
   requireNamespace("readr", quietly = TRUE)
@@ -56,7 +66,7 @@ encrypt_api_key <- function(api_key, enc_name = 'api_key.enc.rds',
   # path private key
   private_key_path <- file.path(path_ssh, "id_api")
 
-## Encrypt with your public key - replace xxxx with your API key
+## Encrypt with your public key
   api_key %>%
   # serialize the object
   serialize(connection = NULL) %>%
