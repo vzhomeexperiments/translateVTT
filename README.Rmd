@@ -1,23 +1,30 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # translateVTT
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-The goal of translateVTT is to translate VTT subtitles automatically.
-For example we can translate multiple files with Closed Captions from
-English to many ‘other’ languages…
+The goal of translateVTT is to translate VTT subtitles automatically. For example we can translate multiple files with Closed Captions from English to many 'other' languages...
 
-This package is complementing Udemy Course [course referral
-link](https://www.udemy.com/course/automated-translation-google-translate-api/?referralCode=5C6A6465A4ADFC5CC326)
+This package is complementing Udemy Course [course referral link](https://www.udemy.com/course/automated-translation-google-translate-api/?referralCode=5C6A6465A4ADFC5CC326)
 
 ## Installation
 
-Once available, you can install the released version of translateVTT
-from [CRAN](https://CRAN.R-project.org) with:
+Once available, you can install the released version of translateVTT from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("translateVTT")
@@ -32,37 +39,27 @@ devtools::install_github("vzhomeexperiments/translateVTT")
 
 # Basic description of Automatic Translations with R and Google Translator API
 
-This document is to create a way to easier read and translate captions
-in `*.vtt` format
+This document is to create a way to easier read and translate captions in `*.vtt` format
 
 ## Why do you need it?
 
-This course is about **automating your translation jobs with Google
-Translate API**. We will access it via R Software for Statistics and
-Graphics. This way we coud use this course even for more anvance text
-processing or even sentiment analysis. With R we can do all that while
-not being professional programmers
+This course is about **automating your translation jobs with Google Translate API**. We will access it via R Software for Statistics and Graphics. This way we coud use this course even for more anvance text processing or even sentiment analysis. With R we can do all that while not being professional programmers
 
-Google Translate web page is free service, **Google translate API is not
-free**. Great news is that **you can have free trial** period and you
-could be able to start right away without paying a dime.
+Google Translate web page is free service, **Google translate API is not free**. Great news is that **you can have free trial** period and you could be able to start right away without paying a dime.
 
 ## Google Translator API key
 
-  - Subscribe to Google Cloud Platform
-  - Generate your API Key
-  - Copy your key
+* Subscribe to Google Cloud Platform
+* Generate your API Key
+* Copy your key
 
-## Encrypt your key in R\!
+## Encrypt your key in R!
 
-See dedicated course that teach in detail about how to use Public key
-Cryptography in R Statistical Software. **Cryptography is more fun with
-R\!** [course referral
-coupon](https://www.udemy.com/course/keep-your-secrets-under-control/?referralCode=5B78D58E7C06AFFD80AE)
+See dedicated course that teach in detail about how to use Public key Cryptography in R Statistical Software.  **Cryptography is more fun with R!** [course referral coupon](https://www.udemy.com/course/keep-your-secrets-under-control/?referralCode=5B78D58E7C06AFFD80AE) 
 
 ## Using Public Key Cryptography to securely store your API Key
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE, paged.print=TRUE}
 # Generate your private key and write it to the folder, we assume you will save it to the folder C:/Users/UserName/.ssh/ mac users can adapt the path...
 # if necessary install package
 # install.packages("openssl"); install.packages("tidyverse")
@@ -74,12 +71,11 @@ library(tidyverse)
 rsa_keygen(bits = 5555) %>% write_pem(path = "C:/Users/UserName/.ssh/id_api")
 # extract and write your public key
 read_key(file = "C:/Users/UserName/.ssh/id_api", password = "") %>% `[[`("pubkey") %>% write_pem("C:/Users/UserName/.ssh/id_api.pub")
+
 ```
+Now you have your personal public key which we will use to encrypt the credentials
 
-Now you have your personal public key which we will use to encrypt the
-credentials
-
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # encrypt your key (I am showing my API key because I will delete it anyhow after creating the course)
 ## Encrypt with PRIVATE key (e.g. use this code yourself)
 "AIzaSyBOoesHv7_7Sd3hYDTNVW3v_8IBpza-_j8" %>% 
@@ -89,31 +85,31 @@ credentials
   encrypt_envelope("C:/Users/UserName/.ssh/id_api.pub") %>% 
   # write encrypted data to File
   write_rds("api_key.enc.rds")
+
 ```
 
-Now we have our encrypted key inside our project folder\!
+Now we have our encrypted key inside our project folder! 
 
-If you will use this script later -\> delete API key from your script
-and feel free to use Version Control Repository\!
+If you will use this script later -> delete API key from your script and feel free to use Version Control Repository!
 
-In the next lecture we will see how to read the key back\!
+In the next lecture we will see how to read the key back!
 
-**NOTE:** if you plan to collaborate and use your key by multiple
-persons with version control check out R package ‘secret’. Remember that
-you can learn how to use it in my course about Cryptography in R\!
+**NOTE:** if you plan to collaborate and use your key by multiple persons with version control check out R package 'secret'. Remember that you can learn how to use it in my course about Cryptography in R!
 
-## Translate Hello World\!
+## Translate Hello World!
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 library(openssl)
 library(tidyverse)
 # to install package in R
 #install.packages("translate")
 library(translate)
 citation("translate")
+
 ```
 
-``` r
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # help on the package
 #?translate
 
@@ -139,22 +135,25 @@ translate("Как насчет выпить", "ru", "en", key = decrypt_envelope
 
 translate("How about a drink", "en", "ru", key = decrypt_envelope(out$data, out$iv, out$session, "C:/Users/fxtrams/.ssh/id_api", password = "") %>% 
   unserialize())
+
+
 ```
 
 ## Solving Translation problem for one VTT file
 
 Solving for one file. Reading the file and visualizing the object
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # read file -> it will be a dataframe
 t <- read.delim("C:/Users/fxtrams/Downloads/L0.vtt", stringsAsFactors = F)
 t
 ```
 
-Extract logical vector identifying position of the arrow ‘–\>’ Get only
-piece of table with text and with timestamps
 
-``` r
+Extract logical vector identifying position of the arrow '-->'
+Get only piece of table with text and with timestamps
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 library(tidyverse)
 # extract logical vector indicating which rows containing timestamps
 x <- t %>% 
@@ -167,10 +166,12 @@ txt <- subset.data.frame(t, !x)
 tst <- subset.data.frame(t,  x)
 ```
 
-Translating this file. We will need to read API key first Selecting one
-column and giving it the original name
 
-``` r
+Translating this file.
+We will need to read API key first
+Selecting one column and giving it the original name
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 library(translateR)
 library(openssl)
 citation("translateR")
@@ -193,9 +194,12 @@ trsltd <- google.dataset.out %>% select(translatedContent)
 colnames(trsltd) <- "WEBVTT"
 ```
 
-Join timestamps with translated text Order dataframe
 
-``` r
+
+Join timestamps with translated text
+Order dataframe
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # bind rows with original timestamps
 abc <- rbind(tst, trsltd)
 
@@ -203,9 +207,10 @@ abc <- rbind(tst, trsltd)
 bcd <-  abc[ order(as.numeric(row.names(abc))), ] %>% as.character() %>% as.data.frame()
 ```
 
-Add empty row Write to the file…
+Add empty row 
+Write to the file...
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # return original name
 colnames(bcd) <- "WEBVTT"
 
@@ -219,7 +224,8 @@ write.table(bcd2, "translated.vtt",quote = F, row.names = F, fileEncoding = "UTF
 
 ## Pack code into Function
 
-``` r
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # call our translation function from R script to environment
 source("translateVTT.R")
 
@@ -231,7 +237,7 @@ translateVTT(fileName = "C:/Users/fxtrams/Downloads/L0.vtt",
 
 Package that is capable to work with Dataframes directly:
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 library(translateR)
 
 # read file -> it will be a dataframe
@@ -256,7 +262,7 @@ tst <- subset.data.frame(t,  x)
 
 ## translate this file using translate API paid service in Google
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # translate object txt or file in R
 # Google, translate column in dataset
 google.dataset.out <- translate(dataset = txt,
@@ -274,9 +280,9 @@ colnames(trsltd) <- "WEBVTT"
 # 
 ```
 
-## place it back…
+## place it back...
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 ## read this file back
 #tsltd <- read.table("translate.txt", encoding = "UTF-8", header = T, stringsAsFactors = F)
 
@@ -298,11 +304,13 @@ bcd2 <- add_row(bcd, WEBVTT  = "", .before = 1)
 
 # write this file back :_)
 write.table(bcd2, "translated.vtt",quote = F, row.names = F)
+
+
 ```
 
-## For loop\!
+## For loop!
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # translate 10 files in .vtt format
 source("translateVTT.R")
 library(openssl)
@@ -336,24 +344,22 @@ for (FILE in filesToTranslate) {
 ## How much does it cost?
 
 #1.26 hours and 18.37$ to translate 23 files to 8 different languages...
+
 ```
 
 # Troubleshooting
 
 ## translateR package does not return translation (Mac)
 
-If you are using Mac and using `translateR` package you may encounter
-following problem. Function translate() would return only 1 column with
-original text without giving you translation.
+If you are using Mac and using `translateR` package you may encounter following problem. Function translate() would return only 1 column with original text without giving you translation.
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 google.dataset.out <- translate(dataset = t, content.field = 'WEBVTT', google.api.key = api_key, source.lang = 'en', target.lang = 'es')
 ```
 
-It was possible to override this problem by using code from `translate`
-package first…
+It was possible to override this problem by using code from `translate` package first...
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 # executed first
 res.translate <- translate::translate(query = "Hello World", source = "en", target = "de", key = apikey)
 and then above code worked
@@ -366,19 +372,15 @@ res.translateR2 <- translateR::translate(dataset = txt,
                               target.lang = "de")
 ```
 
-## not visualizing proper Encoding for ‘special’ characters
+## not visualizing proper Encoding for 'special' characters
 
-see:
-<https://stackoverflow.com/questions/44095025/r-how-to-convert-utf-8-code-like-u9600u524d-back-to-chinese-characters>
+see: https://stackoverflow.com/questions/44095025/r-how-to-convert-utf-8-code-like-u9600u524d-back-to-chinese-characters
 
-For ‘special’ characters like chinese, cyrilic, etc there might be
-problems with encoding while writing to the file\!
+For 'special' characters like chinese, cyrilic, etc there might be problems with encoding while writing to the file!
 
-The most possible reason is the Operating System `locale`. Function
-`translateVTT` tries to handle that by switching OS locale to
-appropriate one:
+The most possible reason is the Operating System `locale`. Function `translateVTT` tries to handle that by switching OS locale to appropriate one:
 
-``` r
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
   ## dealing with locale ... only supporting few key languages at the moment
   # note: we must apply fail back mechanism in case OS does not support it!
   if(destLang == "fr") {
@@ -402,10 +404,10 @@ appropriate one:
 
 # restoring locale
   Sys.setlocale()
+
+
 ```
 
 ## Want to learn more?
 
-Join this *Udemy Course* with this
-[coupon](https://www.udemy.com/course/automated-translation-google-translate-api/?referralCode=5C6A6465A4ADFC5CC326)
-and get Lifetime access with 30 days money back guarantee\!
+Join this *Udemy Course* with this [coupon](https://www.udemy.com/course/automated-translation-google-translate-api/?referralCode=5C6A6465A4ADFC5CC326) and get Lifetime access with 30 days money back guarantee!

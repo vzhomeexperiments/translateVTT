@@ -35,7 +35,7 @@ Google Tranlation with API is paid service, however
 \donttest{
 
 library(openssl)
-library(tidyverse)
+library(readr)
 library(translateVTT)
 library(translateR)
 

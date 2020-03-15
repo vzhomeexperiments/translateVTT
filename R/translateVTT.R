@@ -24,7 +24,7 @@
 #' \donttest{
 #'
 #' library(openssl)
-#' library(tidyverse)
+#' library(readr)
 #' library(translateVTT)
 #' library(translateR)
 #'
@@ -74,7 +74,9 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   }
 
 
-  requireNamespace("tidyverse", quietly = TRUE)
+  requireNamespace("magrittr", quietly = TRUE)
+  requireNamespace("tibble", quietly = TRUE)
+  requireNamespace("readr", quietly = TRUE)
   requireNamespace("translateR", quietly = TRUE)
 
   # read file -> it will be a dataframe
@@ -117,14 +119,14 @@ translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
   colnames(bcd) <- "WEBVTT"
 
   # adding one row in the beginning
-  bcd <- tibble::as_tibble(bcd)
+  bcd <- as_tibble(bcd)
   # add one row
-  bcd2 <- tibble::add_row(bcd, WEBVTT  = "", .before = 1)
+  bcd2 <- add_row(bcd, WEBVTT  = "", .before = 1)
 
   # write this file back :_)
   #fileName <- "C:/Users/fxtrams/Downloads/L1.vtt"
   #destLang <- "de"
-  readr::write_delim(bcd2, paste0(fileName, destLang, ".vtt"), delim = "\t")
+  write_delim(bcd2, paste0(fileName, destLang, ".vtt"), delim = "\t")
 
 }
 
