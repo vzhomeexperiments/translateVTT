@@ -9,7 +9,7 @@ context("encryption")
 path_ssh <- normalizePath(tempdir(),winslash = "/")
 rsa_keygen() %>% write_pem(path = file.path(path_ssh, 'id_api'))
 # extract and write your public key
-read_key(file = file.path(path_ssh, 'id_api', password = "")) %>%
+read_key(file = file.path(path_ssh, 'id_api'), password = "") %>%
  `[[`("pubkey") %>% write_pem(path = file.path(path_ssh, 'id_api.pub'))
 
 path_private_key <- file.path(path_ssh, "id_api")

@@ -28,7 +28,7 @@ the file back.
 }
 \details{
 Google Tranlation with API is paid service, however
-300USD is given for free for 12 month, check clould.google.com
+300USD is given for free for 12 month, check cloud.google.com
 }
 \examples{
 

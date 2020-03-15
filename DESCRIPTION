@@ -1,6 +1,6 @@
 Package: translateVTT
 Type: Package
-Title: Automatically translate VTT files
+Title: Automatically Translate VTT Files
 Version: 1.0.3
 Author: Vladimir Zhbanko
 Maintainer: Vladimir Zhbanko <vladimir.zhbanko@gmail.com>
