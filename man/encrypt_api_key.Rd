@@ -49,6 +49,7 @@ read_key(file = file.path(path_ssh, 'id_api', password = "")) \%>\%
 path_private_key <- file.path(path_ssh, "id_api")
 path_public_key <- file.path(path_ssh, "id_api.pub")
 
+#encrypting string 'my_key'...
 encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path_ssh)
 
 out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
@@ -60,9 +61,11 @@ api_key <- decrypt_envelope(out$data,
                             path_private_key, password = "") \%>\%
            unserialize()
 
+# outcome of the encryption will be a string 'my_key'
+
 
 }
 \references{
 for more info on how to use RSA cryptography in R check my course
-https://www.udemy.com/keep-your-secrets-under-control/?couponCode=CRYPTOGRAPHY-GIT
+https://www.udemy.com/course/keep-your-secrets-under-control/?referralCode=5B78D58E7C06AFFD80AE
 }
