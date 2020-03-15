@@ -42,7 +42,8 @@ library(readr)
 path_ssh <- normalizePath(tempdir(),winslash = "/")
 rsa_keygen() \%>\% write_pem(path = file.path(path_ssh, 'id_api'))
 # extract and write your public key
-read_key(file = file.path(path_ssh, 'id_api', password = "")) \%>\% `[[`("pubkey") \%>\% write_pem(path = file.path(path_ssh, 'id_api.pub'))
+read_key(file = file.path(path_ssh, 'id_api', password = "")) \%>\%
+`[[`("pubkey") \%>\% write_pem(path = file.path(path_ssh, 'id_api.pub'))
 
 
 path_private_key <- file.path(path_ssh, "id_api")
@@ -53,7 +54,11 @@ encrypt_api_key(api_key = 'my_key', enc_name = 'api_key.enc.rds',path_ssh = path
 out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
 
 # decrypting the password using public data list and private key
-api_key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") \%>\% unserialize()
+api_key <- decrypt_envelope(out$data,
+                            out$iv,
+                            out$session,
+                            path_private_key, password = "") \%>\%
+           unserialize()
 
 
 }

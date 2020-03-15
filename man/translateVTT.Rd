@@ -49,7 +49,12 @@ path_private_key <- file.path(path_ssh, "id_api")
 
 # decrypt the key
 out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
-google.api.key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") \%>\% unserialize()
+google.api.key <- decrypt_envelope(out$data,
+                                   out$iv,
+                                   out$session,
+                                   path_private_key,
+                                   password = "") \%>\%
+                  unserialize()
 
 # send one vtt file for translation
 translateVTT(fileName = file_name,

@@ -38,7 +38,12 @@
 #'
 #' # decrypt the key
 #' out <- read_rds(file.path(path_ssh, "api_key.enc.rds"))
-#' google.api.key <- decrypt_envelope(out$data, out$iv, out$session, path_private_key, password = "") %>% unserialize()
+#' google.api.key <- decrypt_envelope(out$data,
+#'                                    out$iv,
+#'                                    out$session,
+#'                                    path_private_key,
+#'                                    password = "") %>%
+#'                   unserialize()
 #'
 #' # send one vtt file for translation
 #' translateVTT(fileName = file_name,
@@ -68,7 +73,8 @@
 translateVTT <- function(fileName, sourceLang = "en", destLang, apikey){
 
   # check if the required packages are installed
-  if (!requireNamespace(c("tibble", "tidyverse", "translateR", "readr", "utils"), quietly = TRUE)) {
+  if (!requireNamespace(c("tibble", "magrittr", "openssl",
+                          "translateR", "readr", "utils"), quietly = TRUE)) {
     stop("Pkg needed for this function to work. Please install it.",
          call. = FALSE)
   }
