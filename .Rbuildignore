@@ -4,3 +4,4 @@
 ^translateVTT\.Rproj$
 ^README\.Rmd$
 ^\.travis\.yml$
+py_youtube_test.py
