@@ -1,14 +1,37 @@
 # Getting Youtube transcripts programmatically https://github.com/jdepoix/youtube-transcript-api
 
-#install
+#install -> run in the terminal
 pip install youtube_transcript_api
+pip install pandas
 
-# video id: akB4kfdBzBU
-transcript = YouTubeTranscriptApi.get_transcripts(video_ids = "wyrbGSX3jwU", languages="en")
+# this does not work:
+transcript = YouTubeTranscriptApi.get_transcripts(video_ids = "wyrbGSX3jwU")
 
+# this works own video
 export = YouTubeTranscriptApi.get_transcript(video_id = "wyrbGSX3jwU")
 
-print(export.fetch())
+# this is not my video (also works)
+exp2 = YouTubeTranscriptApi.get_transcript(video_id = "Vyau3VUVVtI")
+
+print(export)
+
+# determine object type (list)
+type(export)
+
+# save list to csv
+import pandas as pd
+
+# convert to dataframe
+df = pd.DataFrame(export)
+# write to csv file
+df.to_csv('filename.csv', index=False)
+
+
+# convert to dataframe
+df2 = pd.DataFrame(exp2)
+
+# write to csv file
+df2.to_csv('filename2.csv', index=False)
 
 #transcript_list = YouTubeTranscriptApi.list_transcripts(video_id = "wyrbGSX3jwU", languages=['de', 'en'])
 
@@ -53,5 +76,25 @@ transcript = transcript_list.find_manually_created_transcript(['de', 'en'])
 # or automatically generated ones  
 transcript = transcript_list.find_generated_transcript(['de', 'en'])
 
+# translate
+transcript
 
-YouTubeTranscriptApi.get_transcript('wyrbGSX3jwU', format=YouTubeTranscriptApi.Format.SRT)
+
+## Option: translate by youtube api
+vidid = "jOKODSnSIQk"
+
+# get all data
+transcript_list = YouTubeTranscriptApi.list_transcripts(vidid)
+
+# manually created transcript
+transcript = transcript_list.find_manually_created_transcript('en')
+
+
+## workflow summary that can be used:
+
+# 1. Correct closed captions with Youtube Studio
+# 2. Extract as vtt file
+# 3. Translate with translateVTT
+# 4. Upload back to Youtube
+
+
