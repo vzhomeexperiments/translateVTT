@@ -5,3 +5,4 @@
 ^README\.Rmd$
 ^\.travis\.yml$
 py_youtube_test.py
+yt_remote_translate.py
